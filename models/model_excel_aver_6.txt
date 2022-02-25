@@ -1,0 +1,22 @@
+numbers of samples in each class:
+ [0 1 2 3 4 5 6]
+ [3512 1979 2962 2783 3338 3034 2759]
+numbers of adjust samples in train sets:
+ [0 1 2 3 4 5 6]
+ [2435 1405 2044 1947 2343 2127 1955]
+numbers of adjust samples in test sets:
+ [0 1 2 3 4 5 6]
+ [1077  574  918  836  995  907  804]
+total testing accuracy 0.2089674357715595
+test_emo_label: {0: 1077, 1: 574, 2: 918, 3: 836, 4: 995, 5: 907, 6: 804}
+number of test emtion labels 6111
+predlabel: {0: 1674, 1: 3, 2: 792, 3: 426, 4: 1207, 5: 1258, 6: 751}
+number of predicted 6111
+angry: precision: 0.22819593787335724 recall: 0.35468895078922935
+calm: precision: 0.0 recall: 0.0
+surprise: precision: 0.2058080808080808 recall: 0.1775599128540305
+fear: precision: 0.20422535211267606 recall: 0.10406698564593302
+sorrow: precision: 0.20215410107705054 recall: 0.24522613065326634
+disgust: precision: 0.1931637519872814 recall: 0.2679162072767365
+joy: precision: 0.2103861517976032 recall: 0.19651741293532338
+请按任意键继续. . .
