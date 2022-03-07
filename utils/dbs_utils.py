@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] '
                            '- %(levelname)s: %(message)s', level=logging.INFO)
 
 # me.connect(db='algorithmdb', host='127.0.0.1', port=27017, alias='default') # local host
-me.connect(db='algorithmdb', host='127.0.0.1', port=27017, username='test', password='123456', alias='default') # local host in container
+me.connect(db='algorithmdb', host='127.0.0.1', port=27017, username='algdb_root', password='123456', alias='default') # local host in container
 # mongodb://root:dongni%24mongodb%40211022@dds-2ze1843ca7f0dfc4118470.mongodb.rds.aliyuncs.com:3717
 #me.connect(db='algorithmdb', host='dds-2ze1843ca7f0dfc4118470.mongodb.rds.aliyuncs.com', port=3717, username='root', password='dongni$mongodb@211022', alias='default') # 内网地址
 # me.connect(db='algorithmdb', host='dds-2ze1843ca7f0dfc4118470.mongodb.rds.aliyuncs.com', port=3717, username='algorithmdb_root', password='algorithmdb#mongodb$donni@210817', alias='default') # 内网地址
