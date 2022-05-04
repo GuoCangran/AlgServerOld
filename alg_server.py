@@ -14,8 +14,4 @@ import apis.alg_api as api
 
 s = zerorpc.Server(api.AlgorithmRPC(), heartbeat=30)
 s.bind("tcp://0.0.0.0:4242")
-#zerorpc.gevent.spawn(s.run)
-#while True:
-    #zerorpc.gevent.sleep(10)
-
 s.run()

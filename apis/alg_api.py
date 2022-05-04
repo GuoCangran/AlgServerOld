@@ -29,6 +29,11 @@ logging.basicConfig(format='%(asctime)s - %(pathname)s[line:%(lineno)d] '
 model = dbs.read_model_from_dbs(owner='general')
 
 class AlgorithmRPC(object):
+    def __init__(self):
+        self.prv_lens = []
+        self.prv_pi2s = []
+        self.prv_features = []
+    
     def rpc_test(self, name):
         return "Hello, %s" % name
 
@@ -48,11 +53,14 @@ class AlgorithmRPC(object):
 
     def get_emotion(self, data, type='midvalue', user=None):
         if user is None:
-            use_model = model       
+            use_model = model
         else:
             use_model = dbs.read_model_from_dbs(owner=user)
-
         status, emo_label = alg.get_emotion(use_model, data, type)
+        emo_label = [1 if i==4 else i for i in emo_label]
+        emo_label = [4 if i==0 else i for i in emo_label]
+        emo_label = [0 if i==2 else i for i in emo_label]
+        emo_label = [2 if i==4 else i for i in emo_label]
 
         return emo_label
 
@@ -83,15 +91,44 @@ class AlgorithmRPC(object):
         emo = [emo_label.count(i) / len(emo_label) for i in range(0, 7)] if emo_label else []
         return alg.get_anxiety_index(emo)
 
-    def get_pressure_index(self, data, type='midvalue', user=None): 
+    def get_pressure_index(self, data, type='midvalue', user=None):
         hr_value = self.get_heart_rate(data, type)
         pi1 = 0.05 * hr_value + 44.7 - 0.1 * (float)(random.randint(0, 150) + 1)
+        #logger.info("input data length {}".format(len(data)))
+        #self.prv_features.extend(data)
+        #logger.info('accumulated data length: {}'.format(len(self.prv_features)))
+        #if len(self.prv_features) > 150:
+        #    self.prv_features = self.prv_features[-150:]
+        
+        logger.info('data length: {}'.format(len(data)))
         emo_label = self.get_emotion(data, type, user)
+        logger.info('emo_label: {}'.format(emo_label))
+        #emo_label = [1 if i==4 else i for i in emo_label]
+        #emo_label = [4 if i==0 else i for i in emo_label]
+        #emo_label = [0 if i==2 else i for i in emo_label]
+        #emo_label = [2 if i==4 else i for i in emo_label]
+        #logger.info('modified emo_label: {}'.format(emo_label))
         emo = [emo_label.count(i) / len(emo_label) for i in range(0, 7)] if emo_label else []
+
+        logger.info('emotion is: {}'.format(emo))
         pi2 = alg.get_pressure_index(emo)
-        return (pi1 + pi2) / 2
+        logger.info('pi1 is: {}'.format(pi1))
+        logger.info('pi2 is: {}'.format(pi2))
+        #self.prv_pi2s.append(pi2)
+        #self.prv_lens.append(len(emo_label))
+        #logger.info('emo length: {}'.format(len(emo_label)))
+        #logger.info('prv emo length: {}'.format(len(self.prv_lens)))
+        #if len(self.prv_pi2s) > 5:
+        #    self.prv_pi2s = self.prv_pi2s[1:]
+        #    self.prv_lens = self.prv_lens[1:]
+        #pi2_adj = sum(map(lambda x, y: x * y, self.prv_pi2s, self.prv_lens)) / sum(self.prv_lens)
+        #return 0.3 * pi1 + 0.7 * pi2
+        return 0.6 * pi1 + 0.4 * pi2
+        #return pi2
+        #return pi2_adj
 
     def get_fatigue_index(self, data, type='midvalue', user=None):
+        #logger.info('data:{}'.format(data))
         emo_label = self.get_emotion(data, type, user)
         logger.info('emo_label: {}'.format(emo_label))
         emo = [emo_label.count(i) / len(emo_label) for i in range(0, 7)] if emo_label else []
